@@ -9,7 +9,7 @@ g = 9.80665  # Standard gravity
 # parameters
 l1 = 1
 m1 = 1
-theta1 = np.pi/4
+theta1 = np.pi/2
 w1 = 0
 t_start = 0
 t_end = 10
@@ -26,7 +26,6 @@ ys = deque([-l1*np.cos(theta1)])
 H_series = deque([m1*(l1**2)*(w1**2)/2 - m1*g*l1*np.cos(theta1)])
 
 fig, ax = plt.subplots()
-ax.set_aspect('equal')
 plt.xlabel('x')
 plt.ylabel('y')
 
@@ -38,12 +37,12 @@ def f(theta):
 def RungeKutta41(theta, w):
     k1 = f(theta)  # w
     n1 = w  # theta
-    k2 = f(theta + k1*dt/2)
-    n2 = w + n1*dt/2
-    k3 = f(theta + k2*dt/2)
-    n3 = w + n2*dt/2
-    k4 = f(theta + k3*dt)
-    n4 = w + n3*dt
+    k2 = f(theta + n1*dt/2)
+    n2 = w + k1*dt/2
+    k3 = f(theta + n2*dt/2)
+    n3 = w + k2*dt/2
+    k4 = f(theta + n3*dt)
+    n4 = w + k3*dt
     w = w + (k1/6 + k2/3 + k3/3 + k4/6)*dt
     theta = theta + (n1/6 + n2/3 + n3/3 + n4/6)*dt
 
@@ -65,7 +64,10 @@ for i in range(steps+1):
     x = [0, xs[i]]
     y = [0, ys[i]]
     image = plt.plot(x, y, 'o-', lw=2, c="black")
+    ax.grid(True)
+    ax.axis('equal')
     images.append(image)
 
 ani = anim.ArtistAnimation(fig, images, interval=10)
 plt.show()
+print(H_series)
