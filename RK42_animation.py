@@ -144,4 +144,4 @@ for i in range(steps):
 
 ani = anim.ArtistAnimation(fig, images, interval=10)
 
-ani.save('RungeKutta42-1.gif', writer='pillow', fps=50)
+ani.save('./figure/RungeKutta42-1.gif', writer='pillow', fps=50)
