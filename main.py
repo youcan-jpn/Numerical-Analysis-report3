@@ -9,13 +9,13 @@ g = 9.80665  # Standard gravity
 # parameters
 l1 = 1
 m1 = 1
-theta1 = np.pi/2
+theta1 = np.pi/4
 w1 = 0
 t_start = 0
 t_end = 10
 steps = 1000
 
-
+# calculated
 dt = (t_end - t_start)/steps
 
 # lists
@@ -23,11 +23,24 @@ theta_series = deque([theta1])
 w_series = deque([w1])
 xs = deque([l1*np.sin(theta1)])
 ys = deque([-l1*np.cos(theta1)])
-H_series = deque([m1*(l1**2)*(w1**2)/2 - m1*g*l1*np.cos(theta1)])
+t_series = np.linspace(t_start, t_end, steps)
+T_series = deque([])
+U_series = deque([])
+H_series = deque([])
 
-fig, ax = plt.subplots()
-plt.xlabel('x')
-plt.ylabel('y')
+fig = plt.figure()
+ax1 = fig.add_subplot(221)
+ax2 = fig.add_subplot(222)
+ax3 = fig.add_subplot(223)
+ax4 = fig.add_subplot(224)
+ax1.set_xlabel('x /m')
+ax1.set_ylabel('y /m')
+ax2.set_xlabel('time /s')
+ax2.set_ylabel('energy /J')
+ax3.set_xlabel('time /s')
+ax3.set_ylabel('kinetic energy /J')
+ax4.set_xlabel('time /s')
+ax4.set_ylabel('potential energy /J')
 
 
 def f(theta):
@@ -50,7 +63,11 @@ def RungeKutta41(theta, w):
     theta_series.append(theta)
     xs.append(l1*np.sin(theta))
     ys.append(-l1*np.cos(theta))
-    H = m1*(l1**2)*(w**2)/2 - m1*g*l1*np.cos(theta)
+    T = m1*(l1**2)*(w**2)/2
+    U = - m1*g*l1*np.cos(theta)
+    H = T + U
+    T_series.append(T)
+    U_series.append(U)
     H_series.append(H)
 
 
@@ -60,14 +77,24 @@ for i in range(steps):
     RungeKutta41(theta, w)
 
 images = []
-for i in range(steps+1):
+ax2.plot(t_series, H_series, c="red", label="H")
+ax3.plot(t_series, T_series, c="green", label="T")
+ax4.plot(t_series, U_series, c="blue", label="U")
+
+for i in range(steps):
     x = [0, xs[i]]
     y = [0, ys[i]]
-    image = plt.plot(x, y, 'o-', lw=2, c="black")
-    ax.grid(True)
-    ax.axis('equal')
+    # T = T_series[i]
+    # U = U_series[i]
+    # H = T + U
+    image = ax1.plot(x, y, 'o-', lw=2, c="black", label="pendulum")
+    ax1.grid(True)
+    ax1.axis('equal')
     images.append(image)
 
 ani = anim.ArtistAnimation(fig, images, interval=10)
-plt.show()
-print(H_series)
+ax2.legend(loc="upper right")
+ax3.legend(loc="upper right")
+ax4.legend(loc="upper right")
+plt.tight_layout()
+ani.save('RungeKutta41-5.gif', writer='pillow', fps=100)
