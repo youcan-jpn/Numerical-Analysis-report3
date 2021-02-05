@@ -8,14 +8,11 @@ g = 9.80665  # Standard gravity
 # parameters
 l1 = 1
 m1 = 1
-theta1 = np.pi/4
-w1 = 0
+w0 = 0
 t_start = 0
 t_end = 10
 
 # lists
-xs = deque([l1*np.sin(theta1)])
-ys = deque([-l1*np.cos(theta1)])
 T_series = deque([])
 U_series = deque([])
 H_series = deque([])
@@ -39,8 +36,6 @@ def RungeKutta41(theta, w, dt):
 
     w_series.append(w)
     theta_series.append(theta)
-    xs.append(l1*np.sin(theta))
-    ys.append(-l1*np.cos(theta))
     T = m1*(l1**2)*(w**2)/2
     U = - m1*g*l1*np.cos(theta)
     H = T + U
@@ -54,7 +49,6 @@ thetas_str = ["pi6", "pi4", "pi3", "pi2"]
 thetas_tex = [R"$ \theta_0 = \pi/6$", R"$ \theta_0 = \pi/4$", R"$ \theta_0 = \pi/3$", R"$ \theta_0 = \pi/2$"]
 dts = [10**(-i) for i in range(0, 6)]
 steps = [(t_end-t_start)*10**i for i in range(0, 6)]
-w0 = 0
 
 for theta0, theta0_str, theta0_tex in zip(thetas, thetas_str, thetas_tex):
     fig, ax = plt.subplots()
