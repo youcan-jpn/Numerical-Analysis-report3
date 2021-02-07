@@ -2,16 +2,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
 from collections import deque
+import datetime
 
 # constants
 g = 9.80665  # Standard gravity
 
 # parameters
 l1 = 1.0
-l2 = 1.0
-m1 = 1.0
+l2 = 2.0
+m1 = 2.0
 m2 = 1.0
-theta10 = np.pi/2
+theta10 = 7*np.pi/6
 theta20 = np.pi/2
 w10 = 0.0
 w20 = 0.0
@@ -43,7 +44,8 @@ fig, ax = plt.subplots()
 ax.set_xlabel('x /m', fontsize="14")
 ax.set_ylabel('y /m', fontsize="14")
 ax.grid()
-fig.suptitle('Double pendulum', fontsize="20")
+fig.suptitle("$m_1={0}, m_2={1}, l_1={2}, l_2={3}$".format(m1, m2, l1, l2),
+             fontsize="20")
 
 
 def f(theta1, theta2, w1, w2):
@@ -137,11 +139,17 @@ for i in range(steps):
     x = [0, x1s[i], x2s[i]]
     y = [0, y1s[i], y2s[i]]
 
-    image = ax.plot(x, y, 'o-', lw=2, c="black", label="double pendulum")
+    image = ax.plot(x, y, 'o-', lw=2, c="black")
     ax.grid(True)
     ax.axis('equal')
     images.append(image)
 
 ani = anim.ArtistAnimation(fig, images, interval=10)
 
-ani.save('./figure/RungeKutta42-1.gif', writer='pillow', fps=50)
+
+dt_now = datetime.datetime.now()
+
+ani.save('./figure/RungeKutta42_{0}-{1}-{2}-{3}{4}{5}.gif'.format(
+    dt_now.year, dt_now.month, dt_now.day,
+    dt_now.hour, dt_now.minute, dt_now.second), writer='pillow', fps=50)
+# plt.show()
