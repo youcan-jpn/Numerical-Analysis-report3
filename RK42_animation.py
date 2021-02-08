@@ -149,7 +149,7 @@ ani = anim.ArtistAnimation(fig, images, interval=10)
 
 dt_now = datetime.datetime.now()
 
-ani.save('./figure/RungeKutta42_{0}-{1}-{2}-{3}{4}{5}.gif'.format(
-    dt_now.year, dt_now.month, dt_now.day,
-    dt_now.hour, dt_now.minute, dt_now.second), writer='pillow', fps=50)
-# plt.show()
+# ani.save('./figure/RungeKutta42_{0}-{1}-{2}-{3}{4}{5}.gif'.format(
+#     dt_now.year, dt_now.month, dt_now.day,
+#     dt_now.hour, dt_now.minute, dt_now.second), writer='pillow', fps=50)
+plt.show()
