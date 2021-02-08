@@ -3,8 +3,10 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as anim
 from collections import deque
 from datetime import datetime
+
 # constants
 g = 9.80665  # Standard gravity
+dt_now = datetime.now()
 
 # parameters
 l1 = 1
@@ -97,8 +99,6 @@ ax2.legend(loc="upper right")
 ax3.legend(loc="upper right")
 ax4.legend(loc="upper right")
 plt.tight_layout()
-
-dt_now = datetime.now()
 
 # ani.save('./figure/RK41/animation_{0}-{1}-{2}-{3}{4}{5}.gif'.format(
 #     dt_now.year, dt_now.month, dt_now.day,

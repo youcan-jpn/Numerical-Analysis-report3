@@ -48,11 +48,9 @@ def RungeKutta41(theta, w, dt):
 
 thetas = [np.pi/6, np.pi/4, np.pi/3, np.pi/2]
 thetas_str = ["pi6", "pi4", "pi3", "pi2"]
-thetas_tex = [R"$ \theta_0 = \pi/6$", R"$ \theta_0 = \pi/4$",
-              R"$ \theta_0 = \pi/3$", R"$ \theta_0 = \pi/2$"]
+thetas_tex = [R"\pi/6", R"\pi/4", R"\pi/3", R"\pi/2"]
 dts = np.logspace(-4, 0, num=17, base=10.0)
-steps = (t_end-t_start) / dts
-steps = steps.astype('int64')
+
 
 for theta0, theta0_str, theta0_tex in zip(thetas, thetas_str, thetas_tex):
     fig, ax = plt.subplots()
@@ -67,7 +65,7 @@ for theta0, theta0_str, theta0_tex in zip(thetas, thetas_str, thetas_tex):
             w = w_series[-1]
             RungeKutta41(theta, w, dt)
         y.append(np.abs(exact_H - H_series[-1]))
-    ax.plot(dts, y, label="{}".format(theta0_tex))
+    ax.plot(dts, y, label=R"$\theta_0 ={}$".format(theta0_tex))
     ax.semilogx()
     ax.semilogy()
     ax.grid()
