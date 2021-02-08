@@ -1,9 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
+from datetime import datetime
 
 # constants
 g = 9.80665  # Standard gravity
+dt_now = datetime.now()
 
 # parameters
 l1 = 1
@@ -48,8 +50,9 @@ thetas = [np.pi/6, np.pi/4, np.pi/3, np.pi/2]
 thetas_str = ["pi6", "pi4", "pi3", "pi2"]
 thetas_tex = [R"$ \theta_0 = \pi/6$", R"$ \theta_0 = \pi/4$",
               R"$ \theta_0 = \pi/3$", R"$ \theta_0 = \pi/2$"]
-dts = [10**(-i) for i in range(0, 6)]
-steps = [(t_end-t_start)*10**i for i in range(0, 6)]
+dts = np.logspace(-6, 0, num=13, base=10.0)
+steps = (t_end-t_start) / dts
+steps = steps.astype('int64')
 
 for theta0, theta0_str, theta0_tex in zip(thetas, thetas_str, thetas_tex):
     fig, ax = plt.subplots()
@@ -72,4 +75,6 @@ for theta0, theta0_str, theta0_tex in zip(thetas, thetas_str, thetas_tex):
     ax.set_xlabel(R"$ \Delta t$", fontsize="14")
     ax.set_ylabel("Error", fontsize="14")
     fig.suptitle('Evaluation of RK4', fontsize="20")
-    fig.savefig('./figure/RK41/evaluation_{}.jpeg'.format(theta0_str))
+    fig.savefig('./figure/RK41/evaluation_{6}_{0}-{1}-{2}-{3}{4}{5}.jpeg'
+                .format(dt_now.year, dt_now.month, dt_now.day, dt_now.hour,
+                        dt_now.minute, dt_now.second, theta0_str))
