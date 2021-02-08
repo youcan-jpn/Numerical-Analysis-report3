@@ -1,11 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as anim
 from collections import deque
 from datetime import datetime
 
+
 # constants
 g = 9.80665  # Standard gravity
+dt_now = datetime.now()
 
 # parameters
 l1 = 1.0
@@ -40,12 +41,18 @@ U1_series = deque([-m1*g*l1*np.cos(theta10)])
 U2_series = deque([-m2*g*(l1*np.cos(theta10)+l2*np.cos(theta20))])
 H_series = deque([T1_series[0]+T2_series[0]+U1_series[0]+U2_series[0]])
 
-fig, ax = plt.subplots()
-ax.set_xlabel('x /m', fontsize="14")
-ax.set_ylabel('y /m', fontsize="14")
-ax.grid()
-fig.suptitle("$m_1={0}, m_2={1}, l_1={2}, l_2={3}$".format(m1, m2, l1, l2),
-             fontsize="20")
+
+fig = plt.figure()
+ax1 = fig.add_subplot(121)
+ax2 = fig.add_subplot(122)
+# ax3 = fig.add_subplot(133)
+
+ax1.set_xlabel("time /s")
+ax1.set_ylabel("energy /J")
+ax2.set_xlabel("time /s")
+ax2.set_ylabel("energy /J")
+# ax3.set_xlabel("time /s")
+# ax3.set_ylabel("energy /J")
 
 
 def f(theta1, theta2, w1, w2):
@@ -133,24 +140,13 @@ for i in range(steps):
     w2 = w2_series[-1]
     RungeKutta42(theta1, theta2, w1, w2, dt)
 
-images = []
+ax1.plot(t_series, H_series, label="total energy")
+ax1.legend()
 
-for i in range(steps):
-    x = [0, x1s[i], x2s[i]]
-    y = [0, y1s[i], y2s[i]]
+ax2.plot(t_series, T1_series, label="$T_1$")
+ax2.plot(t_series, U1_series, label="$U_1$")
+ax2.plot(t_series, T2_series, label="$T_2$")
+ax2.plot(t_series, U2_series, label="$U_2$")
+ax2.legend()
 
-    image = ax.plot(x, y, 'o-', lw=2, c="black")
-    ax.grid(True)
-    ax.axis('equal')
-    images.append(image)
-
-ani = anim.ArtistAnimation(fig, images, interval=10)
-
-
-dt_now = datetime.now()
-
-ani.save('./figure/temp/animation_{0}-{1}-{2}-{3}{4}{5}.gif'.format(
-    dt_now.year, dt_now.month, dt_now.day,
-    dt_now.hour, dt_now.minute, dt_now.second), writer='pillow', fps=50)
-# plt.show()
-print(H_series)
+plt.show()
