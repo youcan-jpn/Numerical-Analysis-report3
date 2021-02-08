@@ -50,7 +50,7 @@ thetas = [np.pi/6, np.pi/4, np.pi/3, np.pi/2]
 thetas_str = ["pi6", "pi4", "pi3", "pi2"]
 thetas_tex = [R"$ \theta_0 = \pi/6$", R"$ \theta_0 = \pi/4$",
               R"$ \theta_0 = \pi/3$", R"$ \theta_0 = \pi/2$"]
-dts = np.logspace(-6, 0, num=13, base=10.0)
+dts = np.logspace(-4, 0, num=17, base=10.0)
 steps = (t_end-t_start) / dts
 steps = steps.astype('int64')
 
