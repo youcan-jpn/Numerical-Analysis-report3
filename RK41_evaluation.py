@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from collections import deque
 from datetime import datetime
 
+
 # constants
 g = 9.80665  # Standard gravity
 dt_now = datetime.now()
