@@ -72,4 +72,4 @@ for theta0, theta0_str, theta0_tex in zip(thetas, thetas_str, thetas_tex):
     ax.set_xlabel(R"$ \Delta t$", fontsize="14")
     ax.set_ylabel("Error", fontsize="14")
     fig.suptitle('Evaluation of RK4', fontsize="20")
-    fig.savefig('./figure/evaluation_{}.jpeg'.format(theta0_str))
+    fig.savefig('./figure/RK41/evaluation_{}.jpeg'.format(theta0_str))

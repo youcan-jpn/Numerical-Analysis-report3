@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
 from collections import deque
-import datetime
+from datetime import datetime
 
 # constants
 g = 9.80665  # Standard gravity
@@ -147,9 +147,9 @@ for i in range(steps):
 ani = anim.ArtistAnimation(fig, images, interval=10)
 
 
-dt_now = datetime.datetime.now()
+dt_now = datetime.now()
 
-# ani.save('./figure/RungeKutta42_{0}-{1}-{2}-{3}{4}{5}.gif'.format(
-#     dt_now.year, dt_now.month, dt_now.day,
-#     dt_now.hour, dt_now.minute, dt_now.second), writer='pillow', fps=50)
-plt.show()
+ani.save('./figure/RK42/animation_{0}-{1}-{2}-{3}{4}{5}.gif'.format(
+    dt_now.year, dt_now.month, dt_now.day,
+    dt_now.hour, dt_now.minute, dt_now.second), writer='pillow', fps=50)
+# plt.show()
