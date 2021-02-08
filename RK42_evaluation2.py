@@ -15,6 +15,8 @@ m1 = 1.0
 m2 = 1.0
 theta10 = np.pi/6
 theta20 = np.pi/6
+theta10_str = "pi6"
+theta20_str = "pi6"
 w10 = 0.0
 w20 = 0.0
 t_start = 0
@@ -43,16 +45,16 @@ H_series = deque([T1_series[0]+T2_series[0]+U1_series[0]+U2_series[0]])
 
 
 fig = plt.figure()
-ax1 = fig.add_subplot(121)
-ax2 = fig.add_subplot(122)
-# ax3 = fig.add_subplot(133)
+ax1 = fig.add_subplot(131)
+ax2 = fig.add_subplot(132)
+ax3 = fig.add_subplot(133)
 
 ax1.set_xlabel("time /s")
 ax1.set_ylabel("energy /J")
 ax2.set_xlabel("time /s")
 ax2.set_ylabel("energy /J")
-# ax3.set_xlabel("time /s")
-# ax3.set_ylabel("energy /J")
+ax3.set_xlabel("time /s")
+ax3.set_ylabel("energy /J")
 
 
 def f(theta1, theta2, w1, w2):
@@ -140,6 +142,14 @@ for i in range(steps):
     w2 = w2_series[-1]
     RungeKutta42(theta1, theta2, w1, w2, dt)
 
+H_series = np.array(H_series)
+T1_series = np.array(T1_series)
+T2_series = np.array(T2_series)
+U1_series = np.array(U1_series)
+U2_series = np.array(U2_series)
+H1_series = T1_series + U1_series
+H2_series = T2_series + U2_series
+
 ax1.plot(t_series, H_series, label="total energy")
 ax1.legend()
 
@@ -149,4 +159,11 @@ ax2.plot(t_series, T2_series, label="$T_2$")
 ax2.plot(t_series, U2_series, label="$U_2$")
 ax2.legend()
 
-plt.show()
+ax3.plot(t_series, H1_series, label="$H_1$")
+ax3.plot(t_series, H2_series, label="$H_2$")
+ax3.legend()
+
+fig.savefig('./figure/RK42/evaluation2/{6}_{7}_{0}-{1}-{2}-{3}{4}{5}.jpeg'
+            .format(dt_now.year, dt_now.month, dt_now.day, dt_now.hour,
+                    dt_now.minute, dt_now.second,
+                    theta10_str, theta20_str))
