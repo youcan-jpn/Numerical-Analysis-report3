@@ -139,8 +139,8 @@ for i in range(steps):
 # plot
 fig, ax = plt.subplots()
 
-ax.set_xlabel("t /s")
-ax.set_ylabel(R"$\theta /rad$")
+ax.set_xlabel("t /s", fontsize=14)
+ax.set_ylabel(R"$\theta\ /rad$", fontsize=14)
 ax.plot(t_series, theta1_series,
         label=R"$numerical:\theta_1$", lw=3, c="orange")
 ax.plot(t_series, theta2_series,
@@ -152,6 +152,7 @@ ax.plot(t_series, exact_theta2(t_series),
 ax.grid()
 ax.set_title("Comparison of Analytical solution and Numerical solution")
 plt.legend()
+plt.tight_layout()
 
 fig.savefig('./figure/RK42/comparison1/{0}-{1}-{2}-{3}{4}{5}.jpeg'
             .format(dt_now.year, dt_now.month, dt_now.day, dt_now.hour,
