@@ -141,14 +141,10 @@ fig, ax = plt.subplots()
 
 ax.set_xlabel("t /s", fontsize=14)
 ax.set_ylabel(R"$\theta\ /rad$", fontsize=14)
-ax.plot(t_series, theta1_series,
-        label=R"$numerical:\theta_1$", lw=3, c="orange")
-ax.plot(t_series, theta2_series,
-        label=R"$numerical:\theta_2$", lw=3, c="lime")
-ax.plot(t_series, exact_theta1(t_series),
-        label=R"$analytical:\theta_1$", c="blue")
-ax.plot(t_series, exact_theta2(t_series),
-        label=R"$analytical:\theta_2$", c="magenta")
+ax.plot(t_series, theta1_series, label=R"$numerical:\theta_1$", marker='x', ms=4)
+ax.plot(t_series, theta2_series, label=R"$numerical:\theta_2$", marker='v', ms=4)
+ax.plot(t_series, exact_theta1(t_series), label=R"$analytical:\theta_1$")
+ax.plot(t_series, exact_theta2(t_series), label=R"$analytical:\theta_2$")
 ax.grid()
 ax.set_title("Comparison of Analytical solution and Numerical solution")
 plt.legend()
