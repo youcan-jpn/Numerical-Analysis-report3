@@ -13,15 +13,15 @@ l1 = 1.0
 l2 = 1.0
 m1 = 1.0
 m2 = 1.0
-theta10 = np.pi/2
-theta20 = np.pi/6
-theta10_str = "pi2"
-theta20_str = "pi6"
+theta10 = np.pi/6
+theta20 = np.pi/2
+theta10_str = "pi6"
+theta20_str = "pi2"
 w10 = 0.0
 w20 = 0.0
 t_start = 0
-t_end = 4
-steps = 200
+t_end = 10
+steps = 1000
 
 # calculated
 dt = (t_end - t_start)/steps
