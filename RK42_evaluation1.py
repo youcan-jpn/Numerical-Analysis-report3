@@ -15,7 +15,7 @@ m2 = 1.0
 w10 = 0.0
 w20 = 0.0
 t_start = 0
-t_end = 10
+t_end = 4
 
 
 # lists
@@ -98,12 +98,12 @@ def RungeKutta42(theta1, theta2, w1, w2, dt):
     H_series.append(H)
 
 
-thetas = [np.pi/6, np.pi/4, np.pi/3, np.pi/2]
-thetas_str = ["pi6", "pi4", "pi3", "pi2"]
-thetas_tex = [R"\pi/6", R"\pi/4", R"\pi/3", R"\pi/2"]
-# thetas = [np.pi/12, np.pi/24]
-# thetas_str = ["pi12", "pi24"]
-# thetas_tex = [R"\pi/12", R"\pi/24"]
+# thetas = [np.pi/6, np.pi/4, np.pi/3, np.pi/2]
+# thetas_str = ["pi6", "pi4", "pi3", "pi2"]
+# thetas_tex = [R"\pi/6", R"\pi/4", R"\pi/3", R"\pi/2"]
+thetas = [np.pi/12, np.pi/24]
+thetas_str = ["pi12", "pi24"]
+thetas_tex = [R"\pi/12", R"\pi/24"]
 dts = np.logspace(-5, -2, num=7, base=10.0)
 
 
@@ -144,16 +144,16 @@ for i in range(len(thetas)):
                 RungeKutta42(theta1, theta2, w1, w2, dt)
                 # print(theta1, theta2, w1, w2, dt, 'next')
 
-            y.append(np.abs(exact_H - H_series[-1]))
+            y.append(np.log(np.abs(1 - H_series[-1]/exact_H)))
 
         ax.plot(dts, y, label=R"$\theta_1 = {0}, \theta_2 = {1}$"
                 .format(theta10_tex, theta20_tex))
         ax.semilogx()
-        ax.semilogy()
+        # ax.semilogy()
         ax.grid()
         ax.legend(fontsize="14")
         ax.set_xlabel(R"$ \Delta t$", fontsize="14")
-        ax.set_ylabel("Error", fontsize="14")
+        ax.set_ylabel(R"$\log|1-E/E_0|$", fontsize="14")
         ax.set_title('Evaluation of RK4 (Double Pendulum)', fontsize="16")
         fig.tight_layout()
         fig.savefig('./figure/RK42/evaluation1/{6}_{7}_{0}-{1}-{2}-{3}{4}{5}.jpeg'

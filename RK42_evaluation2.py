@@ -13,15 +13,15 @@ l1 = 1.0
 l2 = 1.0
 m1 = 1.0
 m2 = 1.0
-theta10 = np.pi/6
+theta10 = np.pi/2
 theta20 = np.pi/6
-theta10_str = "pi6"
+theta10_str = "pi2"
 theta20_str = "pi6"
 w10 = 0.0
 w20 = 0.0
 t_start = 0
-t_end = 20
-steps = 2000
+t_end = 4
+steps = 200
 
 # calculated
 dt = (t_end - t_start)/steps
@@ -45,9 +45,10 @@ H_series = deque([T1_series[0]+T2_series[0]+U1_series[0]+U2_series[0]])
 
 
 fig = plt.figure()
-ax1 = fig.add_subplot(131)
-ax2 = fig.add_subplot(132)
-ax3 = fig.add_subplot(133)
+ax1 = fig.add_subplot(221)
+ax2 = fig.add_subplot(222)
+ax3 = fig.add_subplot(223)
+ax4 = fig.add_subplot(224)
 
 ax1.set_xlabel("time /s")
 ax1.set_ylabel("energy /J")
@@ -55,6 +56,8 @@ ax2.set_xlabel("time /s")
 ax2.set_ylabel("energy /J")
 ax3.set_xlabel("time /s")
 ax3.set_ylabel("energy /J")
+ax4.set_xlabel("time /s")
+ax4.set_ylabel(R"$\log|1-E/E_0|$")
 
 
 def f(theta1, theta2, w1, w2):
@@ -151,17 +154,28 @@ H1_series = T1_series + U1_series
 H2_series = T2_series + U2_series
 
 ax1.plot(t_series, H_series, label="total energy")
+ax1.grid()
 ax1.legend()
 
 ax2.plot(t_series, T1_series, label="$T_1$")
 ax2.plot(t_series, U1_series, label="$U_1$")
 ax2.plot(t_series, T2_series, label="$T_2$")
 ax2.plot(t_series, U2_series, label="$U_2$")
+ax2.grid()
 ax2.legend()
 
 ax3.plot(t_series, H1_series, label="$H_1$")
 ax3.plot(t_series, H2_series, label="$H_2$")
+ax3.grid()
 ax3.legend()
+
+exact_H = H_series[0]
+print(exact_H)
+logH_series = np.log(np.abs(1-H_series/exact_H))
+ax4.plot(t_series, logH_series)
+ax4.grid()
+
+plt.tight_layout()
 
 fig.savefig('./figure/RK42/evaluation2/{6}_{7}_{0}-{1}-{2}-{3}{4}{5}.jpeg'
             .format(dt_now.year, dt_now.month, dt_now.day, dt_now.hour,
