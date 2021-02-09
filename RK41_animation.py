@@ -4,9 +4,11 @@ import matplotlib.animation as anim
 from collections import deque
 from datetime import datetime
 
+
 # constants
 g = 9.80665  # Standard gravity
 dt_now = datetime.now()
+
 
 # parameters
 l1 = 1
@@ -17,8 +19,10 @@ t_start = 0
 t_end = 10
 steps = 1000
 
+
 # calculated
 dt = (t_end - t_start)/steps
+
 
 # lists
 theta_series = deque([theta1])
@@ -30,19 +34,10 @@ T_series = deque([m1*(l1**2)*(w1**2)/2])
 U_series = deque([-m1*g*l1*np.cos(theta1)])
 H_series = deque([m1*(l1**2)*(w1**2)/2-m1*g*l1*np.cos(theta1)])
 
-fig = plt.figure()
-ax1 = fig.add_subplot(221)
-ax2 = fig.add_subplot(222)
-ax3 = fig.add_subplot(223)
-ax4 = fig.add_subplot(224)
-ax1.set_xlabel('x /m')
-ax1.set_ylabel('y /m')
-ax2.set_xlabel('time /s')
-ax2.set_ylabel('energy /J')
-ax3.set_xlabel('time /s')
-ax3.set_ylabel('kinetic energy /J')
-ax4.set_xlabel('time /s')
-ax4.set_ylabel('potential energy /J')
+
+fig, ax = plt.subplots()
+ax.set_xlabel(R'$x\ /m$', fontsize=14)
+ax.set_ylabel(R'$y\ /m$', fontsize=14)
 
 
 def f(theta):
@@ -79,28 +74,20 @@ for i in range(steps):
     RungeKutta41(theta, w)
 
 images = []
-ax2.plot(t_series, H_series, c="red", label="H")
-ax3.plot(t_series, T_series, c="green", label="T")
-ax4.plot(t_series, U_series, c="blue", label="U")
 
 for i in range(steps):
     x = [0, xs[i]]
     y = [0, ys[i]]
-    # T = T_series[i]
-    # U = U_series[i]
-    # H = T + U
-    image = ax1.plot(x, y, 'o-', lw=2, c="black", label="pendulum")
-    ax1.grid(True)
-    ax1.axis('equal')
+    image = ax.plot(x, y, 'o-', lw=2, c="black", label="pendulum")
+    ax.grid(True)
+    ax.axis('equal')
+    ax.set_title("simple pendulum", fontsize=18)
     images.append(image)
 
 ani = anim.ArtistAnimation(fig, images, interval=10)
-ax2.legend(loc="upper right")
-ax3.legend(loc="upper right")
-ax4.legend(loc="upper right")
 plt.tight_layout()
 
-ani.save('./figure/RK41/animation_{0}-{1}-{2}-{3}{4}{5}.gif'.format(
+ani.save('./figure/RK41/animation/{0}-{1}-{2}-{3}{4}{5}.gif'.format(
     dt_now.year, dt_now.month, dt_now.day,
     dt_now.hour, dt_now.minute, dt_now.second), writer='pillow', fps=50)
 # plt.show()
