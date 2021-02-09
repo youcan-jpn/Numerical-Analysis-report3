@@ -12,8 +12,8 @@ l1 = 1.0
 l2 = 1.0
 m1 = 1.0
 m2 = 1.0
-theta10 = np.pi/6
-theta20 = np.pi/6
+theta10 = np.pi/2
+theta20 = np.pi/4
 w10 = 0.0
 w20 = 0.0
 t_start = 0
@@ -113,7 +113,7 @@ def RungeKutta42(theta1, theta2, w1, w2, dt):
 
     T1 = m1*(l1**2)*(w1**2)/2
     T2 = (m2*((l1**2)*(w1**2)+(l2**2)*(w2**2)
-             + 2*l1*l2*np.cos(phi)*w1*w2))/2
+              + 2*l1*l2*np.cos(phi)*w1*w2))/2
     T1_series.append(T1)
     T2_series.append(T2)
 
@@ -149,8 +149,7 @@ ani = anim.ArtistAnimation(fig, images, interval=10)
 
 dt_now = datetime.now()
 
-ani.save('./figure/temp/animation_{0}-{1}-{2}-{3}{4}{5}.gif'.format(
+ani.save('./figure/RK42/animation/{0}-{1}-{2}-{3}{4}{5}.gif'.format(
     dt_now.year, dt_now.month, dt_now.day,
     dt_now.hour, dt_now.minute, dt_now.second), writer='pillow', fps=50)
 # plt.show()
-print(H_series)
