@@ -85,7 +85,7 @@ def RungeKutta42(theta1, theta2, w1, w2, dt):
 
     T1 = m1*(l1**2)*(w1**2)/2
     T2 = (m2*((l1**2)*(w1**2)+(l2**2)*(w2**2)
-              + 2*l1*l2*np.cos(phi)*w1*w2))
+              + 2*l1*l2*np.cos(phi)*w1*w2))/2
     T1_series.append(T1)
     T2_series.append(T2)
 
@@ -122,7 +122,7 @@ for i in range(len(thetas)):
 
         T10 = m1*(l1**2)*(w10**2)/2
         T20 = (m2*((l1**2)*(w10**2)+(l2**2)*(w20**2)
-                   + 2*l1*l2*np.cos(phi0)*w10*w20))
+                   + 2*l1*l2*np.cos(phi0)*w10*w20))/2
         U10 = -m1*g*l1*np.cos(theta10)
         U20 = -m2*g*(l1*np.cos(theta10)+l2*np.cos(theta20))
         exact_H = T10 + T20 + U10 + U20
