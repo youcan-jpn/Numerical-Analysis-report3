@@ -13,7 +13,7 @@ dt_now = datetime.now()
 # parameters
 l1 = 1
 m1 = 1
-theta1 = np.pi/4
+theta1 = np.pi/3
 w1 = 0
 t_start = 0
 t_end = 10
