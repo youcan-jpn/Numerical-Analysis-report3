@@ -34,8 +34,8 @@ x2s = deque([l1*np.sin(theta10)+l2*np.sin(theta20)])
 y2s = deque([-l1*np.cos(theta10)-l2*np.cos(theta20)])
 t_series = np.linspace(t_start, t_end, steps+1)
 T1_series = deque([m1*(l1**2)*(w10**2)/2])
-T2_series = deque([m2*((l1**2)*(w10**2)+(l2**2)*(w20**2)
-                  + 2*l1*l2*np.cos(theta10-theta20)*w10*w20)])
+T2_series = deque([(m2*((l1**2)*(w10**2)+(l2**2)*(w20**2)
+                  + 2*l1*l2*np.cos(theta10-theta20)*w10*w20))/2])
 U1_series = deque([-m1*g*l1*np.cos(theta10)])
 U2_series = deque([-m2*g*(l1*np.cos(theta10)+l2*np.cos(theta20))])
 H_series = deque([T1_series[0]+T2_series[0]+U1_series[0]+U2_series[0]])
@@ -112,8 +112,8 @@ def RungeKutta42(theta1, theta2, w1, w2, dt):
     phi = theta1-theta2
 
     T1 = m1*(l1**2)*(w1**2)/2
-    T2 = m2*((l1**2)*(w1**2)+(l2**2)*(w2**2)
-             + 2*l1*l2*np.cos(phi)*w1*w2)
+    T2 = (m2*((l1**2)*(w1**2)+(l2**2)*(w2**2)
+             + 2*l1*l2*np.cos(phi)*w1*w2))/2
     T1_series.append(T1)
     T2_series.append(T2)
 
