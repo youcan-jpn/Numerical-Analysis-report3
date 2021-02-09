@@ -98,12 +98,12 @@ def RungeKutta42(theta1, theta2, w1, w2, dt):
     H_series.append(H)
 
 
-# thetas = [np.pi/6, np.pi/4, np.pi/3, np.pi/2]
-# thetas_str = ["pi6", "pi4", "pi3", "pi2"]
-# thetas_tex = [R"\pi/6", R"\pi/4", R"\pi/3", R"\pi/2"]
-thetas = [np.pi/12, np.pi/24]
-thetas_str = ["pi12", "pi24"]
-thetas_tex = [R"\pi/12", R"\pi/24"]
+thetas = [np.pi/6, np.pi/4, np.pi/3, np.pi/2]
+thetas_str = ["pi6", "pi4", "pi3", "pi2"]
+thetas_tex = [R"\pi/6", R"\pi/4", R"\pi/3", R"\pi/2"]
+# thetas = [np.pi/12, np.pi/24]
+# thetas_str = ["pi12", "pi24"]
+# thetas_tex = [R"\pi/12", R"\pi/24"]
 dts = np.logspace(-5, -2, num=7, base=10.0)
 
 
