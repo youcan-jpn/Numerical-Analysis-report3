@@ -20,8 +20,8 @@ theta20_str = "pi2"
 w10 = 0.0
 w20 = 0.0
 t_start = 0
-t_end = 10
-steps = 1000
+t_end = 4
+steps = 400
 
 # calculated
 dt = (t_end - t_start)/steps
