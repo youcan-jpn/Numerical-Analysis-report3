@@ -38,7 +38,7 @@
 
 \begin{document}
 
-\title{数値解析 最終レポート\\単振り子および二重振り子の運動方程式に対するRunge-Kutta法の適用}
+\title{数値解析 最終レポート\\ \large 単振り子および二重振り子の運動方程式に対するRunge-Kutta法の適用}
 \author{計数工学科 J4190147 小野悠太}
 \date{\today}
 \maketitle
@@ -47,10 +47,12 @@
 \tableofcontents
 \newpage
 
-\section{目的}
+\section{はじめに}
 このレポートでは，二重振り子の運動方程式に対してRunge-Kutta法を適用し数値解を求め，運動を可視化したうえで系の全エネルギーがどれほどの精度で保存されるのかを確かめることを目的とする．\\
 このような目的を定めた理由としては，1Aセメスターで受講した「振動波動論」で二重振り子のカオスが紹介されておりその複雑な運動に興味を持ったことや今セメスターの「数学1D」で解析力学を習い，二重振り子の運動方程式を立てやすくなったことが挙げられる．また，カオスという複雑で非周期的な運動に対しRunge-Kutta法を適用しても，期待される精度が出るのか気になったことも理由の一つである．\par
-具体的な設定や実験方法については後の章で説明する．また，ここで扱う二重振り子のモデルはそれぞれの振り子の腕の先端に質点が存在するモデル（単振り子を連結したもの）とする．図のキャプションなどで現れるRK4という文字列は4段4次のRunge-Kutta法を表すものとする．
+具体的な設定や実験方法については後の章で説明する．また，ここで扱う二重振り子のモデルはそれぞれの振り子の腕の先端に質点が存在するモデル（単振り子を連結したもの）とする．図のキャプションなどで現れるRK4という文字列は4段4次のRunge-Kutta法を表すものとする．\\
+なお今回用いたpythonのソースコードや掲載することのできなかった図は\href{https://drive.google.com/drive/folders/1-kBPHq-9sE60zyVfORrB6y43cNVRGf_P?usp=sharing}{Google Drive}から見られるようにした．
+
 
 \newpage
 
@@ -376,6 +378,7 @@ Runge-Kutta法によって求まる数値解とこの解析解を比較するた
 \end{itemize}
 \newpage
 \subsection{ソースコード}
+今回用いたプログラムは\href{https://drive.google.com/drive/folders/1-kBPHq-9sE60zyVfORrB6y43cNVRGf_P?usp=sharing}{Google Drive}で見られるようにしたが，ここにも掲載する．
 \lstinputlisting[caption=単振り子のアニメーション作成, label=src:RK41anim]{RK41_animation.py}
 \newpage
 \lstinputlisting[caption=単振り子のエネルギーの時間変化について, label=src:RK41eval2]{RK41_evaluation2.py}
