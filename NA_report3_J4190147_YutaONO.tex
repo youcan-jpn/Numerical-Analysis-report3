@@ -50,7 +50,7 @@
 \section{目的}
 このレポートでは，二重振り子の運動方程式に対してRunge-Kutta法を適用し数値解を求め，運動を可視化したうえで系の全エネルギーがどれほどの精度で保存されるのかを確かめることを目的とする．\\
 このような目的を定めた理由としては，1Aセメスターで受講した「振動波動論」で二重振り子のカオスが紹介されておりその複雑な運動に興味を持ったことや今セメスターの「数学1D」で解析力学を習い，二重振り子の運動方程式を立てやすくなったことが挙げられる．また，カオスという複雑で非周期的な運動に対しRunge-Kutta法を適用しても，期待される精度が出るのか気になったことも理由の一つである．\par
-具体的な設定や実験方法については後の章で説明する．また，ここで扱う二重振り子のモデルはそれぞれの振り子の腕の先端に質点が存在するモデル（単振り子を連結したもの）とする．
+具体的な設定や実験方法については後の章で説明する．また，ここで扱う二重振り子のモデルはそれぞれの振り子の腕の先端に質点が存在するモデル（単振り子を連結したもの）とする．図のキャプションなどで現れるRK4という文字列は4段4次のRunge-Kutta法を表すものとする．
 
 \newpage
 
@@ -243,7 +243,7 @@
 \begin{equation}
   \theta_2 = -\dfrac{2\sqrt{2}-2}{4000}\cos{(\sqrt{(2+\sqrt{2})\dfrac{g}{l}}t)} + \dfrac{2\sqrt{2}+2}{4000}\cos{(\sqrt{(2-\sqrt{2})\dfrac{g}{l}}t)}
 \end{equation}
-と書くことができる（導出の過程は\ref{ch:analytical}節に示した）．\\
+と書くことができる．\\
 Runge-Kutta法によって求まる数値解とこの解析解を比較するためのプログラムはソースコード\ref{src:RK42comp}に示した．
 このコードを実行すると以下のようなグラフが得られる（ここでは特に\(l=1\)とした）．
 \begin{figure}[H]
@@ -320,11 +320,53 @@ Runge-Kutta法によって求まる数値解とこの解析解を比較するた
 \newpage
 \section{付録}
 \subsection{二重振り子の運動方程式の導出} \label{ch:EL-eq}
+長さ\(l_1\)，質量\(m_1\)の振り子の下に長さ\(l_2\), 質量\(m_2\)の振り子を連結した二重振り子を考える．\\
+振り子1, 2が鉛直下向きとなす角を\(\theta_1,\ \theta_2\)としてデカルト座標で表すと，
+\begin{equation}
+  (x_1,\ y_1) = (l_1\sin{\theta_1},\ -l_1\cos{\theta_1})
+\end{equation}
+\begin{equation}
+  (x_2,\ y_2) = (l_1\sin{\theta_1} + l_2\sin{\theta_2},\ -l_1\cos{\theta_1}-l_2\cos{\theta_2})
+\end{equation}
+となり，これを時間微分すると，
+\begin{equation}
+  (\dot{x_1},\ \dot{y_1}) = (l_1\dot{\theta_1}\cos{\theta_1},\ l_1\dot{\theta_1}\sin{\theta_1})
+\end{equation}
+\begin{equation}
+  (\dot{x_2},\ \dot{y_2}) = (l_1\dot{\theta_1}\cos{\theta_1} + l_2\dot{\theta_2}\cos{\theta_2},\ l_1\dot{\theta_1}\sin{\theta_1}+l_2\dot{\theta_2}\sin{\theta_2})
+\end{equation}
+となる．\\
+ふりこ\(i\)の運動エネルギー，ポテンシャルエネルギーをそれぞれ\(T_i,\ U_i\)と表すとこの系のLagrangianは，
+\begin{gather}
+  \begin{split}
+    L &= T_1 + T_2 - U_1 -U_2 \\
+      &= \dfrac{1}{2}m_1(\dot{x_1}^2+\dot{y_1}^2) + \dfrac{1}{2}m_2(\dot{x_2}^2+\dot{y_2}^2) -m_1gy_1 -m_2gy_2 \\
+      &= \dfrac{1}{2}m_1l_1^2\dot{\theta_1}^2 + \dfrac{1}{2}m_2\qty[l_1^2\dot{\theta_1}^2+l_2^2\dot{\theta_2}^2+2l_1l_2\dot{\theta_1}\dot{\theta_2}\cos\phi]+m_1gl_1\cos{\theta_1}+m_2g(l_1\cos{\theta_1+l_2\cos{\theta_2}})
+  \end{split}
+\end{gather}
+となる．ただし\(\theta_1-\theta_2 = \phi\)とした．これをEuler-Lagrange方程式に代入すると，
+\begin{equation}
+  \begin{pmatrix}
+    (m_1+m_2)l_1 & m_2l_2\cos{\phi} \\
+    l_1\cos{\phi} & l_2 \\
+  \end{pmatrix}
+  \mqty(\ddot{\theta_1} \\ \ddot{\theta_2})
+  =
+  \mqty(-m_2l_2\dot{\theta_2}^2\sin{\phi}-(m_1+m_2)g\sin{\theta_1} \\ l_1\dot{\theta_1}^2\sin{\phi}-g\sin{\theta_2})
+\end{equation}
+が求まる．ここで，
+\begin{equation}
+  \mqty((m_1+m_2)l_1 & m_2l_2\cos{\phi} \\ l_1\cos{\phi} & l_2)^{-1} \\= \dfrac{1}{(m_1+m_2)l_1l_2-m_2l_1l_2\cos^2{\phi}}\mqty(l_2 & -m_2l_2\cos{\phi} \\ -l_1\cos{\phi} & (m_1+m_2)l_1)
+\end{equation}
+であることから，
+\begin{subnumcases}
+  {}
+  \ddot{\theta_1} = \dfrac{-m_2l_2\dot{\theta_2}^2\sin{\phi}-(m_1+m_2)g\sin{\theta_1}-m_2l_1\dot{\theta_1}^2\sin{\phi}\cos{\phi}+m_2g\cos{\phi}\sin{\theta_2}}{(m_1+m_2)l_1-m_2l_1\cos^2{\phi}} & \\
+  \ddot{\theta_2} = \dfrac{m_2l_2\dot{\theta_2}^2\cos{\phi}\sin{\phi}+(m_1+m_2)g\sin{\theta_1}\cos{\phi}+(m_1+m_2)l_1\dot{\theta_1}^2\sin{\phi}-(m_1+m_2)g\sin{\theta_2}}{(m_1+m_2)l_2-m_2l_2\cos^2{\phi}} &
+\end{subnumcases}
+が求まる．
 
 \newpage
-\subsection{二重振り子の微小角近似における解析解の導出} \label{ch:analytical}
-
-
 \subsection{計算機環境}
 \begin{itemize}
   \item CPU: Intel(R) Core(TM) i7-9700K CPU @ 3.60GHz   3.60 GHz
